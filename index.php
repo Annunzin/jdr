@@ -25,8 +25,8 @@ if(!isset($_GET['page']) || empty($_GET['page']) || $_GET['page'] == 'accueil') 
 else {
     switch($_GET['page']) {
 
-        case 'partie' :
-            $mc->pagePartie();
+        case 'parametres' :
+            $mc->pageParametres();
             break;
 
         // On va à la page d'accueil par défaut
