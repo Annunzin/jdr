@@ -1,0 +1,8 @@
+php_value max_input_vars 2500
+php_value suhosin.post.max_vars 2500
+php_value suhosin.request.max_vars 2500
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png)$ [NC]
+RewriteRule ^([^/]*)$ index.php?page=$1 [L]
