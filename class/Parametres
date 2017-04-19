@@ -1,0 +1,34 @@
+<?php
+
+class Parametres {
+
+    /**
+     * Constantes PATH
+     */
+
+    // TODO : mettre le path de là où est ton application
+    const PATH_APPLI = 'toncheminoùestledossierdelappli"
+
+
+
+    /**
+     * Constantes DATABASE
+     */
+    // TODO remplacer par les valeurs de ta base de données
+
+
+    const HOST = 'localhost';
+    const DB = 'jdr';
+    const LOGIN = 'root';
+    const PWD = '';
+
+    /**
+     * Renvoie un objet PDO pour intéragir avec la base de l'appli
+     * Cela automatisera à chaque fois ta connexion à la bdd
+     * @return PDO
+     */
+    public static function getPDO() {
+        return new PDO('mysql:host=' . self::HOST . ';dbname=' . self::DB . ';charset=utf8', self::LOGIN, self::PWD);
+    }
+
+}
