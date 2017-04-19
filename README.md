@@ -1,5 +1,4 @@
-#TODO : 
-
+#TODO :
 
 ##A la fin :
     - Changer les chemins des fichiers + accès bdd dans : index.php - class/Parametres.php
