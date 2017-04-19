@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 19 Avril 2017 à 13:52
+-- Généré le :  Mer 19 Avril 2017 à 16:16
 -- Version du serveur :  5.6.24
 -- Version de PHP :  5.6.8
 
@@ -28,8 +28,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `composer` (
   `composer_partie_id` bigint(20) unsigned NOT NULL,
-  `composer_ennemi_id` bigint(20) unsigned NOT NULL
+  `composer_ennemi_id` bigint(20) unsigned NOT NULL,
+  `composer_vivant` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `composer`
+--
+
+INSERT INTO `composer` (`composer_partie_id`, `composer_ennemi_id`, `composer_vivant`) VALUES
+(9, 3, 1),
+(9, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -42,14 +51,15 @@ CREATE TABLE IF NOT EXISTS `ennemi` (
   `ennemi_nom` varchar(40) NOT NULL,
   `ennemi_espece` varchar(40) NOT NULL,
   `ennemi_vie` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `ennemi`
 --
 
 INSERT INTO `ennemi` (`ennemi_id`, `ennemi_nom`, `ennemi_espece`, `ennemi_vie`) VALUES
-(3, 'premer', 'gobr', 5);
+(3, 'premer', 'gobr', 5),
+(4, 'premer', 'gob', 3);
 
 -- --------------------------------------------------------
 
@@ -62,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `joueur` (
   `joueur_pseudo` varchar(40) NOT NULL,
   `joueur_score` int(10) unsigned NOT NULL DEFAULT '0',
   `joueur_vie` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `joueur`
@@ -70,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `joueur` (
 
 INSERT INTO `joueur` (`joueur_id`, `joueur_pseudo`, `joueur_score`, `joueur_vie`) VALUES
 (1, 'rtr', 0, 1),
-(5, 'deuzr', 0, 3);
+(5, 'deuzr', 0, 3),
+(6, 'erer', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +92,14 @@ INSERT INTO `joueur` (`joueur_id`, `joueur_pseudo`, `joueur_score`, `joueur_vie`
 CREATE TABLE IF NOT EXISTS `partie` (
   `partie_id` bigint(20) unsigned NOT NULL,
   `partie_joueur_id` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `partie`
+--
+
+INSERT INTO `partie` (`partie_id`, `partie_joueur_id`) VALUES
+(9, 1);
 
 --
 -- Index pour les tables exportées
@@ -119,17 +137,17 @@ ALTER TABLE `partie`
 -- AUTO_INCREMENT pour la table `ennemi`
 --
 ALTER TABLE `ennemi`
-  MODIFY `ennemi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `ennemi_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `joueur`
 --
 ALTER TABLE `joueur`
-  MODIFY `joueur_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `joueur_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `partie`
 --
 ALTER TABLE `partie`
-  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- Contraintes pour les tables exportées
 --
