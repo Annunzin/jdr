@@ -8,12 +8,31 @@
 </head>
 <body>
 
+<div class="container">
+
+
+<!-- Renvoie le tableau de message de retour s'il y'en a un -->
+<?php if(isset($message_retour)) { ?>
+    <div class="row">
+        <div class="col-lg-3 col-md-1">&nbsp;</div>
+        <div class="col-lg-6 col-md-10">
+            <br />
+            <div class="alert alert-success">
+                <b>Message : </b> <?= $message_retour['message'] ?>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-1">&nbsp;</div>
+    </div>
+<?php } ?>
+
 <h1>Création des produits nécessaires...
 
     &nbsp;&nbsp;<a class="btn btn-default" href="/jdr/"><span class="glyphicon glyphicon-home"></span></a>
 
 </h1>
 <hr/>
+
+
 
 <div class="row">
     <!-- On fait appel à des modals pour ajouter les différentes entités (appels redirigés plus bas)-->
@@ -304,6 +323,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script src="pages/lib/jquery/jquery.min.js"></script>
