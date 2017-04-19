@@ -29,6 +29,10 @@ else {
             $mc->pageParametres();
             break;
 
+        case 'creation':
+            $mc->pageCreation();
+            break;
+
         // On va à la page d'accueil par défaut
         default :
             $mc->pageAccueil();
