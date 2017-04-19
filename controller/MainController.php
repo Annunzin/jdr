@@ -9,6 +9,16 @@ class MainController{
     // Gère l'affichage de la page d'accueil
     public function pageAccueil(){
 
+
+        // On inclue la vue
+        include_once 'pages/accueil.php';
+    }
+
+
+
+    public function pageParametres(){
+
+
         // Si on a ajouté une valeur (monstre, joueur...)
         if(isset($_POST) && !empty($_POST)) {
 
@@ -61,7 +71,6 @@ class MainController{
 
                 // alimente un tableau de retour
                 $message_retour = array('erreur' => false, 'message' => 'Le joueur a bien été supprimé !');
-
 
 
             }
@@ -125,11 +134,8 @@ class MainController{
         $lesMonstres = Ennemi::getAll();
         $lesJoueurs = Joueur::getAll();
 
-
-
-
         // On inclue la vue
-        include_once 'pages/accueil.php';
+        include_once 'pages/parametres.php';
     }
 
 }
