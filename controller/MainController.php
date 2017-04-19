@@ -15,6 +15,44 @@ class MainController{
     }
 
 
+    public function pageCreation(){
+
+
+        if(isset($_POST)&& !empty($_POST)){
+
+            $id_joueur = $_POST['joueur_choisi'];
+
+            $partie = new Partie(null,$id_joueur);
+
+
+            // On enregistre la partie en base
+            $partie->enregistrer();
+
+            // On récupère le dernier enregistrement (pour avoir l'id)
+            $partie = Partie::getDernierEnregistrement();
+
+
+
+
+            foreach($_POST['monstre_choisi'] as $id_monstre){
+
+                // envoie l'id du dernier enregistrement + l'id des monstres
+                Partie::composerPartie($partie[0],$id_monstre);
+
+            }
+
+            // alimente un tableau de retour
+
+            $message_retour = array('erreur' => false, 'message' => 'La partie a bien été créée !');
+        }
+
+
+        $lesMonstres = Ennemi::getAll();
+        $lesJoueurs = Joueur::getAll();
+
+        include_once 'pages/creation.php';
+    }
+
 
     public function pageParametres(){
 
