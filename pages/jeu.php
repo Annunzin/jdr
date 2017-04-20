@@ -27,6 +27,36 @@
         <hr/>
 
 
+        <div class="row">
+
+            <div id="menuJoueur" class="col-md-3 col-lg-3 col-sm-3">
+
+                <h3>
+
+                    <?php echo $joueur->getPseudo();
+                    ?>
+                </h3>
+
+                <?php
+
+                echo '    <hr/>';
+                echo '    <br/>';
+                echo $joueur->getVieActuelle().'/'.$joueur->getVie();
+                echo '    <br/>';
+                echo 'Restants : '.$unePartie->getNbMonstre();
+
+                ?>
+                <br/>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
     </div>
 
 
