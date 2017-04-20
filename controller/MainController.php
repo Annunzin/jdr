@@ -18,7 +18,13 @@ class MainController{
     public function pageCreation(){
 
 
-        if(isset($_POST)&& !empty($_POST)){
+        if(isset($_POST)&& !empty($_POST)
+        && isset($_POST['joueur_choisi']) && isset($_POST['monstre_choisi'])
+        && !empty($_POST['joueur_choisi']) && !empty($_POST['monstre_choisi'])){
+
+
+
+
 
             $id_joueur = $_POST['joueur_choisi'];
 
@@ -34,10 +40,11 @@ class MainController{
 
 
 
+
             foreach($_POST['monstre_choisi'] as $id_monstre){
 
                 // envoie l'id du dernier enregistrement + l'id des monstres
-                Partie::composerPartie($partie[0],$id_monstre);
+                Partie::composerPartie($partie,$id_monstre);
 
             }
 
@@ -46,12 +53,107 @@ class MainController{
             $message_retour = array('erreur' => false, 'message' => 'La partie a bien été créée !');
         }
 
+        else{
+
+            if(isset($_POST)&& !empty($_POST)) {
+
+                // alimente un tableau de retour
+
+                $message_retour = array('erreur' => true, 'message' => 'Il n\'y a pas de monstre ou de joueur dans la partie !');
+            }
+
+        }
+
 
         $lesMonstres = Ennemi::getAll();
         $lesJoueurs = Joueur::getAll();
 
         include_once 'pages/creation.php';
     }
+
+
+    public function pageLancement(){
+
+
+
+        /**
+         * Supprimer joueur
+         */
+        if(isset($_POST['lancer_partie'])){
+
+
+
+
+            $id_partie = (int) $_POST['lancer_partie'];
+
+            // rediriger sur la page avec comme param l'id de partie
+
+            header('Location:jeu&partie='.$id_partie);
+
+        }
+
+
+
+
+        if(isset($_GET['err'])&& $_GET['err']=='partie'){
+            // alimente un tableau de retour
+
+            $message_retour = array('erreur' => true, 'message' => 'Choisissez une partie !');
+
+
+        }
+
+
+        $lesParties = Partie::getAll();
+        include_once 'pages/lancement.php';
+    }
+
+
+    public function pageJeu(){
+
+
+        // Pour vérif de partie valide
+        $lesParties = Partie::getAll();
+
+
+
+        if(isset($_GET['partie'])){
+
+
+            $err ='oui';
+
+            foreach($lesParties as $unePartie){
+
+                if($unePartie->getId() == $_GET['partie']){
+
+                    include_once 'pages/jeu.php';
+
+                    $err='non';
+
+
+                }
+            }
+
+
+
+
+            if($err=='oui')
+                header('Location:lancement&err=partie');
+
+
+        }
+
+        else{
+
+            header('Location:lancement&err=partie');
+
+
+        }
+
+    }
+
+
+
 
 
     public function pageParametres(){
@@ -74,6 +176,9 @@ class MainController{
 
                 // On enregistre en bdd le joueur
                 $joueur->enregistrer();
+
+                // alimente un tableau de retour
+                $message_retour = array('erreur' => false, 'message' => 'Le joueur a bien été créé !');
             }
 
             /**
@@ -92,6 +197,9 @@ class MainController{
 
                 // On enregistre en bdd le monstre
                 $monstre->enregistrer();
+
+                // alimente un tableau de retour
+                $message_retour = array('erreur' => false, 'message' => 'Le monstre a bien été créé !');
             }
 
 
