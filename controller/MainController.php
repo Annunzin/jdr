@@ -27,8 +27,9 @@ class MainController{
 
 
             $id_joueur = $_POST['joueur_choisi'];
+            $joueur = Joueur::getParId($id_joueur);
 
-            $partie = new Partie(null,$id_joueur);
+            $partie = new Partie(null,$joueur->getId(),$joueur->getPseudo(),0,$joueur->getVie());
 
 
             // On enregistre la partie en base
@@ -77,7 +78,7 @@ class MainController{
 
 
         /**
-         * Supprimer joueur
+         * Lancer la partie
          */
         if(isset($_POST['lancer_partie'])){
 
@@ -125,6 +126,17 @@ class MainController{
             foreach($lesParties as $unePartie){
 
                 if($unePartie->getId() == $_GET['partie']){
+
+
+
+                    // Récupérer le joueur avec ses pv dans cette partie
+
+                    $joueur = Joueur::getParId($unePartie->getIdJoueur());
+
+                    // On affecte à l'objet joueur la vie actuelle
+                    $joueur->setVieActuelle($unePartie->getVieActuelle());
+
+                    // Récupérer les monstres
 
                     include_once 'pages/jeu.php';
 
