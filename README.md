@@ -41,6 +41,9 @@
 ## Changelog (ordre décroissant des objectifs réalisés) :
 
 
+
+    + Petit encadré du joueur avec les monstres à tuer + ses pdv restants
+    + Correction apportée : le nb de parties s'affiche désormais correctement dans lancement
     + Vérif avec le get pour savoir si le résultat de la partie est une partie pouvant être en cours
     + Ajout de la page de lancement pour les parties qui ont encore des monstres vivants
     + Ajout d'un message d'erreur si partie ajoutée sans monstre - joueur
