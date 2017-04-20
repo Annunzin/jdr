@@ -4,6 +4,7 @@
 ## Paramétrage de l'application :
 
 
+    - Il est conseillé d'utiliser l'application avec Xampp et PhpMyAdmin :)
     - Changer tous les chemins dans Parametres.php selon le déploiement
     - Importer la bdd
     - Changer les noms des dossiers dans mainController.php / index.php si le nom change
@@ -15,10 +16,7 @@
     - Écran de lancement : petit récapitulatif de la partie
 
 
-## Pour le projet :
-
-
-
+## Objectifs du projet :
 
 
 
@@ -41,6 +39,12 @@
 ## Changelog (ordre décroissant des objectifs réalisés) :
 
 
+### Version 0.2 :
+
+
+
+
+### Version 0.1 :
 
     + Petit encadré du joueur avec les monstres à tuer + ses pdv restants
     + Correction apportée : le nb de parties s'affiche désormais correctement dans lancement
