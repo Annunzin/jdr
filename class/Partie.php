@@ -9,21 +9,28 @@ class Partie {
     private $est_en_cours;
     private $joueur_pseudo;
     private $nb_monstre;
+    private $vie_actuelle;
 
 
 
-    public function __construct($id,$id_joueur,$joueur_pseudo="",$nb_monstre=0){
+    public function __construct($id,$id_joueur,$joueur_pseudo="",$nb_monstre=0,$vie_actuelle){
 
         $this->id = $id;
         $this->id_joueur = $id_joueur;
         $this->est_en_cours = true;
         $this->joueur_pseudo = $joueur_pseudo;
         $this->nb_monstre = $nb_monstre;
+        $this->vie_actuelle = $vie_actuelle;
 
     }
 
     public function getNbMonstre(){
         return $this->nb_monstre;
+    }
+
+
+    public function getVieActuelle(){
+        return $this->vie_actuelle;
     }
 
     public function getJoueurPseudo(){
@@ -50,9 +57,9 @@ class Partie {
 
         // On fait appel à la connexion PDO
         $pdo = Parametres::getPDO();
-        $sql = $pdo->prepare('INSERT INTO partie(partie_id,partie_joueur_id,partie_en_cours)
-                              VALUES(?,?,?)');
-        return $sql->execute(array($this->getId(), $this->getIdJoueur(),$this->getEnCours()));
+        $sql = $pdo->prepare('INSERT INTO partie(partie_id,partie_joueur_id,partie_en_cours,partie_vie_actuelle)
+                              VALUES(?,?,?,?)');
+        return $sql->execute(array($this->getId(), $this->getIdJoueur(),$this->getEnCours(),$this->getVieActuelle()));
     }
 
 
@@ -79,14 +86,17 @@ class Partie {
 
 
 
-        $res = $pdo->query("SELECT partie_id, partie_joueur_id, joueur_pseudo, count(*) as nb_monstres
+        $res = $pdo->query("SELECT partie_id, partie_joueur_id,partie_vie_actuelle, joueur_pseudo,
+                            count(DISTINCT composer_ennemi_id) as nb_monstres
                             FROM partie
                             INNER JOIN joueur ON partie.partie_joueur_id = joueur.joueur_id
                             INNER JOIN composer ON partie.partie_id = composer.composer_partie_id
-                            WHERE partie_en_cours = 1;;")->fetchAll(PDO::FETCH_ASSOC);
+                            WHERE partie_en_cours = 1
+                            GROUP BY partie_id, partie_joueur_id,partie_vie_actuelle, joueur_pseudo")->fetchAll(PDO::FETCH_ASSOC);
         $output = array();
         foreach($res as $partie) {
-            $output[] = new Partie( $partie['partie_id'], $partie['partie_joueur_id'],$partie['joueur_pseudo'],$partie['nb_monstres']);
+            $output[] = new Partie( $partie['partie_id'], $partie['partie_joueur_id'],
+                                    $partie['joueur_pseudo'],$partie['nb_monstres'],$partie['partie_vie_actuelle']);
         }
         return $output;
     }
