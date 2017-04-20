@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 19 Avril 2017 à 16:16
+-- Généré le :  Jeu 20 Avril 2017 à 14:04
 -- Version du serveur :  5.6.24
 -- Version de PHP :  5.6.8
 
@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS `composer` (
 
 INSERT INTO `composer` (`composer_partie_id`, `composer_ennemi_id`, `composer_vivant`) VALUES
 (9, 3, 1),
-(9, 4, 1);
+(9, 4, 1),
+(14, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `joueur` (
   `joueur_pseudo` varchar(40) NOT NULL,
   `joueur_score` int(10) unsigned NOT NULL DEFAULT '0',
   `joueur_vie` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `joueur`
@@ -81,7 +82,9 @@ CREATE TABLE IF NOT EXISTS `joueur` (
 INSERT INTO `joueur` (`joueur_id`, `joueur_pseudo`, `joueur_score`, `joueur_vie`) VALUES
 (1, 'rtr', 0, 1),
 (5, 'deuzr', 0, 3),
-(6, 'erer', 0, 1);
+(6, 'erer', 0, 1),
+(7, 'trois', 0, 40),
+(8, 'quatre', 0, 50);
 
 -- --------------------------------------------------------
 
@@ -91,15 +94,17 @@ INSERT INTO `joueur` (`joueur_id`, `joueur_pseudo`, `joueur_score`, `joueur_vie`
 
 CREATE TABLE IF NOT EXISTS `partie` (
   `partie_id` bigint(20) unsigned NOT NULL,
-  `partie_joueur_id` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  `partie_joueur_id` bigint(20) unsigned NOT NULL,
+  `partie_en_cours` tinyint(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `partie`
 --
 
-INSERT INTO `partie` (`partie_id`, `partie_joueur_id`) VALUES
-(9, 1);
+INSERT INTO `partie` (`partie_id`, `partie_joueur_id`, `partie_en_cours`) VALUES
+(9, 1, 1),
+(14, 7, 0);
 
 --
 -- Index pour les tables exportées
@@ -142,12 +147,12 @@ ALTER TABLE `ennemi`
 -- AUTO_INCREMENT pour la table `joueur`
 --
 ALTER TABLE `joueur`
-  MODIFY `joueur_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `joueur_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `partie`
 --
 ALTER TABLE `partie`
-  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- Contraintes pour les tables exportées
 --
