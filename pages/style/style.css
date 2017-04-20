@@ -2,6 +2,11 @@ h1,h3 {
     text-align: center;
 }
 
+body{
+
+    background-color:lightblue;
+}
+
 
 .bloc-vue {
     border:1px solid black;
@@ -10,6 +15,13 @@ h1,h3 {
     height:300px;
     background-color: lightsteelblue;
     margin-top:20px;
+}
+
+#menuJoueur{
+    border:1px solid black;
+    border-radius: 20px;
+    background-color:lightgray;
+
 }
 
 
