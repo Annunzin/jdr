@@ -96,7 +96,7 @@ class Joueur extends Entite {
 
 
             $sql = $pdo->prepare("UPDATE joueur SET joueur_vie = ?,joueur_pseudo = ? WHERE joueur_id = ?");
-            $sql->execute(array($vie,$pseudo,$id_joueur));
+            $sql->execute(array($pseudo,$vie,$id_joueur));
         }
     }
 
