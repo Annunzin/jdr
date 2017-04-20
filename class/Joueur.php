@@ -4,6 +4,7 @@ class Joueur extends Entite {
 
     private $pseudo;
     private $score;
+    private $vie_actuelle;
 
     public function __construct($pseudo, $id,$vie_max){
 
@@ -24,6 +25,14 @@ class Joueur extends Entite {
 
 
 
+    }
+
+    public function getVieActuelle(){
+        return $this->vie_actuelle;
+    }
+
+    public function setVieActuelle($vie){
+        $this->vie_actuelle = $vie;
     }
 
     // récupère l'id du joueur
@@ -55,6 +64,25 @@ class Joueur extends Entite {
                               VALUES(null,?,?)');
         return $sql->execute(array($this->getPseudo(), $this->getVie()));
     }
+
+
+    /**
+     * Renvoie un objet Joueur correspondant à l'identifiant fourni
+     * @param $id int : identifiant du joueur
+     * @return bool|Joueur : false si l'identifiant ne correspond à rien
+     */
+    public static function getParId($id) {
+        $id = (int) $id;
+        $pdo = Parametres::getPDO();
+        $sql = $pdo->prepare('SELECT * FROM joueur WHERE joueur_id = ?');
+        $sql->execute(array($id));
+        $res = $sql->fetch(PDO::FETCH_ASSOC);
+        if(!empty($res))
+            return new Joueur($res['joueur_pseudo'], $res['joueur_id'], $res['joueur_vie']);
+        else
+            return false;
+    }
+
 
 
     // Récupère tous les joueurs
