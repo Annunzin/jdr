@@ -1,5 +1,13 @@
 #Readme :
 
+
+## Paramétrage de l'application :
+
+
+    - Changer tous les chemins dans Parametres.php selon le déploiement
+    - Importer la bdd
+    - Changer les noms des dossiers dans mainController.php / index.php si le nom change
+
 ##A la fin :
     - Changer les chemins des fichiers + accès bdd dans : index.php - class/Parametres.php
     - Changer noms des titres + textes
