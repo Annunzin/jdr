@@ -14,6 +14,21 @@
 
 
 
+        <!-- Renvoie le tableau de message de retour s'il y'en a un -->
+        <?php if(isset($message_retour)) { ?>
+            <div class="row">
+                <div class="col-lg-3 col-md-1">&nbsp;</div>
+                <div class="col-lg-6 col-md-10">
+                    <br />
+                    <div class="alert alert-success">
+                        <b>Message : </b> <?= $message_retour['message'] ?>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-1">&nbsp;</div>
+            </div>
+        <?php } ?>
+
+
 
 
 
@@ -41,13 +56,23 @@
 
                 echo '    <hr/>';
                 echo '    <br/>';
+                echo '    <p id="affichage_vie">';
                 echo $joueur->getVieActuelle().'/'.$joueur->getVie();
+                echo '    </p>';
+
                 echo '    <br/>';
                 echo 'Restants : '.$unePartie->getNbMonstre();
 
                 ?>
                 <br/>
 
+                <button class="btn btn-danger" id="perdre_pv" name="perdre_pv" onclick="perdrePv();">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+
+                <button class="btn btn-success" id="sauvegarder_partie" name="sauvegarder_partie">
+                    <span class="glyphicon glyphicon-save"></span>
+                </button>
 
 
             </div>
@@ -57,10 +82,77 @@
         </div>
 
 
+
+
     </div>
 
 
 
 <script src="pages/lib/jquery/jquery.min.js"></script>
 <script src="pages/lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+
+    // vie_actuelle, pseudo, vie_max, vivant, objets
+
+    var joueur = <?php echo json_encode($joueur);?>;
+
+
+    /**
+     * test perte pv
+     */
+    function perdrePv() {
+
+
+        joueur.vie_actuelle = joueur.vie_actuelle-1;
+
+        document.getElementById("affichage_vie").innerHTML =joueur.vie_actuelle+'/'+joueur.vie_max;
+
+    }
+
+
+    function $_GET(param) {
+        var vars = {};
+        window.location.href.replace( location.hash, '' ).replace(
+            /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+            function( m, key, value ) { // callback
+                vars[key] = value !== undefined ? value : '';
+            }
+        );
+
+        if ( param ) {
+            return vars[param] ? vars[param] : null;
+        }
+        return vars;
+    }
+
+    $("#sauvegarder_partie").on("click",function(){
+
+
+
+
+        var param_partie = $_GET('partie');
+
+        // Récupération des valeurs
+
+
+        var url = 'jeu&partie='+param_partie;
+
+
+        var data =  'vie_actuelle='+ joueur.vie_actuelle;
+
+        var form = $('<form action="' + url + '" method="post">' +
+        '<input  type="hidden" name="vie_actuelle" value="'+joueur.vie_actuelle+' " />' +
+        '</form>');
+        $('body').append(form);
+        form.submit();
+
+
+
+
+    });
+
+
+</script>
 </body>
