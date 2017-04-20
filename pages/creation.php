@@ -13,12 +13,26 @@
 
 
     <!-- Renvoie le tableau de message de retour s'il y'en a un -->
-    <?php if(isset($message_retour)) { ?>
+    <?php if(isset($message_retour) && !$message_retour['erreur']) { ?>
         <div class="row">
             <div class="col-lg-3 col-md-1">&nbsp;</div>
             <div class="col-lg-6 col-md-10">
                 <br />
                 <div class="alert alert-success">
+                    <b>Message : </b> <?= $message_retour['message'] ?>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-1">&nbsp;</div>
+        </div>
+    <?php } ?>
+
+    <!-- Renvoie le tableau de message de retour s'il y'en a un -->
+    <?php if(isset($message_retour) && $message_retour['erreur']) { ?>
+        <div class="row">
+            <div class="col-lg-3 col-md-1">&nbsp;</div>
+            <div class="col-lg-6 col-md-10">
+                <br />
+                <div class="alert alert-danger">
                     <b>Message : </b> <?= $message_retour['message'] ?>
                 </div>
             </div>
