@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 20 Avril 2017 à 14:04
+-- Généré le :  Jeu 20 Avril 2017 à 15:01
 -- Version du serveur :  5.6.24
 -- Version de PHP :  5.6.8
 
@@ -37,9 +37,8 @@ CREATE TABLE IF NOT EXISTS `composer` (
 --
 
 INSERT INTO `composer` (`composer_partie_id`, `composer_ennemi_id`, `composer_vivant`) VALUES
-(9, 3, 1),
-(9, 4, 1),
-(14, 3, 1);
+(17, 3, 1),
+(17, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -95,16 +94,16 @@ INSERT INTO `joueur` (`joueur_id`, `joueur_pseudo`, `joueur_score`, `joueur_vie`
 CREATE TABLE IF NOT EXISTS `partie` (
   `partie_id` bigint(20) unsigned NOT NULL,
   `partie_joueur_id` bigint(20) unsigned NOT NULL,
-  `partie_en_cours` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  `partie_en_cours` tinyint(1) NOT NULL,
+  `partie_vie_actuelle` int(10) unsigned NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `partie`
 --
 
-INSERT INTO `partie` (`partie_id`, `partie_joueur_id`, `partie_en_cours`) VALUES
-(9, 1, 1),
-(14, 7, 0);
+INSERT INTO `partie` (`partie_id`, `partie_joueur_id`, `partie_en_cours`, `partie_vie_actuelle`) VALUES
+(17, 6, 1, 1);
 
 --
 -- Index pour les tables exportées
@@ -152,7 +151,7 @@ ALTER TABLE `joueur`
 -- AUTO_INCREMENT pour la table `partie`
 --
 ALTER TABLE `partie`
-  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `partie_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- Contraintes pour les tables exportées
 --
