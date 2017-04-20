@@ -33,6 +33,14 @@ else {
             $mc->pageCreation();
             break;
 
+        case 'lancement':
+            $mc->pageLancement();
+            break;
+
+        case 'jeu' :
+            $mc->pageJeu();
+            break;
+
         // On va à la page d'accueil par défaut
         default :
             $mc->pageAccueil();
