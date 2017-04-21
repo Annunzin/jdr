@@ -90,6 +90,8 @@
                             <tr style="background-color:#B4AF91;">
                                 <th>Pseudo</th>
                                 <th>Vie max</th>
+                                <th>Dégâts de base</th>
+
                                 <th></th>
                             </tr>
                             </thead>
@@ -108,6 +110,7 @@
 
                                 echo '    <td><input class="form-control" type="text" name="' . $unJoueur->getId() . '@pseudo' . '" value="' . $unJoueur->getPseudo(). '" />    </td>';
                                 echo '    <td><input class="form-control" type="number" min="1" name="' . $unJoueur->getId() . '@vie' . '" value="' . $unJoueur->getVie(). '" />    </td>';
+                                echo '    <td><input class="form-control" type="number" max="20" min="1" name="' . $unJoueur->getId() . '@degat_base' . '" value="' . $unJoueur->getDegatBase(). '" />    </td>';
 
 
 
@@ -194,6 +197,7 @@
                                 <th>Nom</th>
                                 <th>Espèce</th>
                                 <th>Vie max</th>
+                                <th>Dégâts de base</th>
 
                                 <th></th>
                             </tr>
@@ -210,6 +214,7 @@
                                 echo '    <td><input class="form-control" type="text" name="' . $unMonstre->getId() . '@nom' . '" value="' . $unMonstre->getNom(). '" />    </td>';
                                 echo '    <td><input class="form-control" type="text" name="' . $unMonstre->getId() . '@espece' . '" value="' . $unMonstre->getEspece(). '" />    </td>';
                                 echo '    <td><input class="form-control" type="number" min="1" name="' . $unMonstre->getId() . '@vie' . '" value="' . $unMonstre->getVie(). '" />    </td>';
+                                echo '    <td><input class="form-control" type="number" max="20" min="1" name="' . $unMonstre->getId() . '@degat_base' . '" value="' . $unMonstre->getDegatBase(). '" />    </td>';
 
 
                                 // Renvoie à la suppression de monstre
@@ -274,8 +279,13 @@
                     </div>
                     <br />
                     <div class="input-group">
-                        <label for="joueur_vie" class="input-group-addon">Vie</label>
+                        <label for="joueur_vie" class="input-group-addon">Vie : </label>
                         <input class="form-control" type="number" name="joueur_vie" id="joueur_vie" value="" min="1"/>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <label for="joueur_degat_base" class="input-group-addon">Dégâts de base : </label>
+                        <input class="form-control" type="number" name="joueur_degat_base" id="joueur_degat_base" value="" max="20" min="1"/>
                     </div>
                     <hr />
                     <button class="btn btn-success" type="submit" name="quoi" value="ajout_joueur" onclick="return ajouterJoueur();">
@@ -312,6 +322,11 @@
                     <div class="input-group">
                         <label for="monstre_vie" class="input-group-addon">Vie</label>
                         <input class="form-control" type="number" name="monstre_vie" id="monstre_vie" value="" min="1"/>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <label for="ennemi_degat_base" class="input-group-addon">Dégâts de base : </label>
+                        <input class="form-control" type="number" name="ennemi_degat_base" id="ennemi_degat_base" value="" max="50" min="1"/>
                     </div>
                     <hr />
                     <button class="btn btn-success" type="submit" name="quoi" value="ajout_monstre" onclick="return ajouterMonstre();">
