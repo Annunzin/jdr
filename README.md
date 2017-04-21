@@ -16,13 +16,13 @@
     - Écran de lancement : petit récapitulatif de la partie
 
 
+
 ## Objectifs du projet :
 
 
 
     - Lancer une partie en choisissant quels monstres et quel joueur on veut + leur nb (ajoutera des pv et marquera comme grp les ennemis)
     - Gérer la page jeu
-    - Mettre un système de logs pour voir les dernières attaques !
     - Affichage de l'encadré du monstre combattu
     - Gérer les combats entre le joueur et les monstres (un par un)
     - Affichage du tableau de score à l'accueil (ou dans un écran "score")
@@ -38,6 +38,8 @@
 ## Changelog (ordre décroissant des objectifs réalisés) :
 
 ### Version 0.3 :
+
+    + Petit log de combat ajouté à l'écran de jeu !
 
 
 ### Version 0.2 :
