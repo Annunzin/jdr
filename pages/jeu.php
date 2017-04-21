@@ -82,35 +82,51 @@
 
             <div id="menuMonstre" class="col-md-offset-1 col-md-8 col-lg-8 col-sm-8">
 
-                <h3>
-
-                    Espèce :
-                    <?php echo $monstre_actuel->getEspece(); ?>
-                </h3>
 
                 <?php
 
-                echo '    <hr/>';
-                echo '    <br/>';
-                echo '    Nom :'.$monstre_actuel->getNom();
-                echo '    <br/>';
-                echo '    Dégâts de base :'.$monstre_actuel->getDegatBase();
-                echo '    <br/>';
+                if(isset($monstre_actuel)&& !empty($monstre_actuel)){
 
-                echo '    <p id="affichage_vie_monstre">';
-                echo $monstre_actuel->getVie().'/'.$monstre_actuel->getVie();
-                echo '    </p>';
 
-                echo '    <br/>';
 
                 ?>
-                <br/>
+                    <h3>
 
-                <button class="btn btn-danger" id="attaquer_monstre" name="attaquer_monstre" onclick="attaquerMonstre();">
-                   <!-- Attaquer !!!-->
-                </button>
+                        Espèce :
+                        <?php echo $monstre_actuel->getEspece(); ?>
+                    </h3>
+
+                    <?php
+
+                    echo '    <hr/>';
+                    echo '    <br/>';
+                    echo '    Nom :'.$monstre_actuel->getNom();
+                    echo '    <br/>';
+                    echo '    Dégâts de base :'.$monstre_actuel->getDegatBase();
+                    echo '    <br/>';
+
+                    echo '    <p id="affichage_vie_monstre">';
+                    echo $monstre_actuel->getVie().'/'.$monstre_actuel->getVie();
+                    echo '    </p>';
+
+                    echo '    <br/>';
+
+                    ?>
+                    <br/>
+
+                    <button class="btn btn-danger" id="attaquer_monstre" name="attaquer_monstre" onclick="attaquerMonstre();">
+                       <!-- Attaquer !!!-->
+                    </button>
+
+                <?php
+                }
+
+                else{
 
 
+                    echo 'Il n\'y a plus de monstre.. redirection en cours...';
+                }
+                ?>
             </div>
 
         </div>
