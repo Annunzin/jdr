@@ -25,6 +25,14 @@ body{
 }
 
 
+#menuMonstre{
+    border:1px solid black;
+    border-radius: 20px;
+    background-color:lightgray;
+
+}
+
+
 
 .bloc-vue:hover {
     background-color: #DCDCDC !important;
