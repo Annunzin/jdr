@@ -123,20 +123,6 @@
 
 <script type="text/javascript">
 
-    /**
-    * Confirmer lancement partie
-    */
-    function lancerPartie() {
-
-
-        if(confirm("Souhaitez-vous vraiment lancer cette partie ?")) {
-
-
-            return true;
-
-        }
-
-    }
 
 </script>
 
