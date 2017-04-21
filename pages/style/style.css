@@ -24,6 +24,19 @@ body{
 
 }
 
+#log{
+
+    border:1px solid black;
+    padding:20px;
+    border-radius: 20px;
+    width:80%;
+    height:200px;
+    overflow-y: auto;
+    background-color: darkseagreen;
+    margin-top:20px;
+
+}
+
 
 #menuMonstre{
     border:1px solid black;
