@@ -201,19 +201,21 @@ class MainController{
                             $message_retour = array('erreur' => false, 'message' => 'Vous avez gagné la partie !');
 
                         }
-                        else{
-                            // On unset le monstre du tableau
+                        // On unset le monstre du tableau
 
-                            unset($lesMonstres[0]);
+                        unset($lesMonstres[0]);
 
-                            $lesMonstres = array_values($lesMonstres);
-                        }
+                        $lesMonstres = array_values($lesMonstres);
+
 
 
                     }
 
                     // définit le premier monstre comme le monstre actuel
-                    $monstre_actuel = $lesMonstres[0];
+
+                    if(!empty($lesMonstres)){
+                        $monstre_actuel = $lesMonstres[0];
+                    }
 
 
 
