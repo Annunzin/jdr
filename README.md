@@ -23,7 +23,6 @@
 
     - Lancement de la partie avec une difficulté (modificateur de pv et de dégâts pour les monstres? Bonus de score pour le joueur)
     - Gérer la page jeu
-    - Gérer les combats entre le joueur et les monstres (un par un)
     - Affichage du tableau de score à l'accueil (ou dans un écran "score")
     - Ajouter une chance de bloquer les coups pour le joueur et les monstres (ajout d'un level ?)
     - Enregistrer le score à la fin de la partie
@@ -38,6 +37,7 @@
 ### Version 0.3 :
 
 
+    + Ajout d'un blocage de coup pour le joueur (1 chance sur 6)
     + Affichage dans la page de création des PDV et dégâts des différentes entités.
     + Correction apportée au message si la partie est gagnée. (fatal error function returns null)
     + Petit log de combat ajouté à l'écran de jeu !
