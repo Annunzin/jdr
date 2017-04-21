@@ -56,13 +56,14 @@
 
 
 
-            <label for="joueur_choisi" class="input-group-addon">Joueur : </label>
+            <label for="joueur_choisi" class="input-group-addon">Joueur / PDV / Dégâts : </label>
 
             <select name="joueur_choisi" class="form-control">
                 <?php
                 if(isset($lesJoueurs)&&!empty($lesJoueurs)){
                     foreach($lesJoueurs as $unJoueur) {
-                        echo '<option value="' . $unJoueur->getId(). '" >' . $unJoueur->getPseudo() . '</option>';
+                        echo '<option value="' . $unJoueur->getId(). '" >' . $unJoueur->getPseudo() .' / '.$unJoueur->getVie()
+                        .' / '.$unJoueur->getDegatBase().'</option>';
                     }
 
                 }
@@ -74,7 +75,7 @@
             </select>
 
 
-            <label for="monstre_choisi[]" class="input-group-addon">Monstre : </label>
+            <label for="monstre_choisi[]" class="input-group-addon">Monstre / PDV / Dégâts : </label>
 
             <div id="champs">
                 <select  name="monstre_choisi[]" multiple class="form-control">
@@ -84,7 +85,8 @@
                     if(isset($lesMonstres)&&!empty($lesMonstres)){
 
                         foreach($lesMonstres as $unMonstre) {
-                            echo '<option value="' . $unMonstre->getId(). '" >' . $unMonstre->getNom() . ' / '. $unMonstre->getEspece(). '</option>';
+                            echo '<option value="' . $unMonstre->getId(). '" >' . $unMonstre->getNom() . ' / '. $unMonstre->getEspece().
+                                ' / '.$unMonstre->getVie().' / '.$unMonstre->getDegatBase(). '</option>';
                         }
 
                     }
