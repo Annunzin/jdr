@@ -1,17 +1,17 @@
 <?php
 
 
-class Ennemi extends Entite {
+class Ennemi extends Entite implements \JsonSerializable{
 
     private $nom;
     private $espece;
 
 
-    public function __construct($nom,$espece,$id,$vie_max){
+    public function __construct($nom,$espece,$id,$vie_max,$degat_base){
 
 
         // On initialise le constructeur parent
-        parent::__construct($id,$vie_max);
+        parent::__construct($id,$vie_max,$degat_base);
 
 
         $this->nom = $nom;
@@ -28,15 +28,26 @@ class Ennemi extends Entite {
 
     }
 
+
+    // pour envoyer les objets php en js
+    public function jsonSerialize() {
+        return get_object_vars($this);
+    }
+
+
     // récupère l'id du monstre
     public function getId(){
         return $this->id;
     }
 
 
-    // récupère le nb de pdv actuels
+    // récupère le nb de pdv max
     public function getVie(){
         return $this->vie;
+    }
+
+    public function setVie($vie){
+        $this->vie = $vie;
     }
 
     // récupère le nom du monstre
@@ -57,9 +68,9 @@ class Ennemi extends Entite {
 
         // On fait appel à la connexion PDO
         $pdo = Parametres::getPDO();
-        $sql = $pdo->prepare('INSERT INTO ennemi(ennemi_id,ennemi_nom,ennemi_espece, ennemi_vie)
-                              VALUES(null,?,?,?)');
-        return $sql->execute(array($this->getNom(), $this->getEspece(),$this->getVie()));
+        $sql = $pdo->prepare('INSERT INTO ennemi(ennemi_id,ennemi_nom,ennemi_espece, ennemi_vie,ennemi_degat_base)
+                              VALUES(null,?,?,?,?)');
+        return $sql->execute(array($this->getNom(), $this->getEspece(),$this->getVie(),$this->getDegatBase()));
     }
 
 
@@ -80,7 +91,34 @@ class Ennemi extends Entite {
         $res = $pdo->query("SELECT * FROM ennemi")->fetchAll(PDO::FETCH_ASSOC);
         $output = array();
         foreach($res as $ennemi) {
-            $output[] = new Ennemi( $ennemi['ennemi_nom'], $ennemi['ennemi_espece'],$ennemi['ennemi_id'],$ennemi['ennemi_vie']);
+            $output[] = new Ennemi( $ennemi['ennemi_nom'],
+                        $ennemi['ennemi_espece'],$ennemi['ennemi_id'],$ennemi['ennemi_vie'],$ennemi['ennemi_degat_base']);
+        }
+        return $output;
+    }
+
+    /*
+     * Récupère les ennemis VIVANTS selon l'id de la partie
+     */
+
+    public static function getParPartie($id_partie) {
+        $pdo = Parametres::getPDO();
+
+        // Sélectionne les ennemis et les trie par ordre de PDV.
+        $res = $pdo->prepare("SELECT * FROM ennemi
+                            INNER JOIN composer ON ennemi.ennemi_id = composer.composer_ennemi_id
+                            WHERE composer_partie_id = ?
+                            AND composer_vivant =? ORDER BY ennemi_vie ASC");
+        $res->execute(array($id_partie,1));
+
+        $valeurs = $res->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+        $output = array();
+        foreach($valeurs as $ennemi) {
+            $output[] = new Ennemi( $ennemi['ennemi_nom'], $ennemi['ennemi_espece'],
+                        $ennemi['ennemi_id'],$ennemi['ennemi_vie'],$ennemi['ennemi_degat_base']);
         }
         return $output;
     }
@@ -98,12 +136,13 @@ class Ennemi extends Entite {
 
             $nom = $champs['ennemi_nom'];
             $espece = $champs['ennemi_espece'];
+            $degat_base = $champs['ennemi_degat_base'];
 
             $vie = $champs['ennemi_vie'];
 
 
-            $sql = $pdo->prepare("UPDATE ennemi SET ennemi_nom = ?,ennemi_espece = ?,ennemi_vie =? WHERE ennemi_id = ?");
-            $sql->execute(array($nom,$espece,$vie,$id_ennemi));
+            $sql = $pdo->prepare("UPDATE ennemi SET ennemi_nom = ?,ennemi_espece = ?,ennemi_vie =?,ennemi_degat_base=? WHERE ennemi_id = ?");
+            $sql->execute(array($nom,$espece,$vie,$degat_base,$id_ennemi));
         }
     }
 } 
