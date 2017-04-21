@@ -20,10 +20,9 @@
 
 
 
-    - Une partie a : des monstres, un joueur, un état des pv du joueur (pour la save)
     - Lancer une partie en choisissant quels monstres et quel joueur on veut + leur nb (ajoutera des pv et marquera comme grp les ennemis)
-    - Affichage d'un encadré avec le joueur + ses pdv restants
     - Gérer la page jeu
+    - Mettre un système de logs pour voir les dernières attaques !
     - Affichage de l'encadré du monstre combattu
     - Gérer les combats entre le joueur et les monstres (un par un)
     - Affichage du tableau de score à l'accueil (ou dans un écran "score")
@@ -38,13 +37,27 @@
 
 ## Changelog (ordre décroissant des objectifs réalisés) :
 
+### Version 0.3 :
+
 
 ### Version 0.2 :
 
+    + Encadré avec le monstre, ses PDV restants, ses dégâts de base
+    + Sauvegarde de l'état de la partie à chaque fin de combat.
+    + Fin de la partie si le joueur gagne.
+    + Fin de la partie si le joueur a 0 ou - de PDV.
+    + Système d'attaque créé : le monstre tape avant le joueur.
+    + Ajout d'un système de dégâts de base pour le joueur et les monstres
+    + Sauvegarde de la partie créée. (reste à ajouter d'autres vars mais le gros est là)
+    + Script ajax créé => base des prochains scripts pour les combats.
 
 
 
 ### Version 0.1 :
+
+
+    + Une partie a : des monstres, un joueur, un état des pv du joueur (pour la save)
+
 
     + Petit encadré du joueur avec les monstres à tuer + ses pdv restants
     + Correction apportée : le nb de parties s'affiche désormais correctement dans lancement
