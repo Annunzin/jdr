@@ -28,9 +28,19 @@ class Partie {
         return $this->nb_monstre;
     }
 
+    public function setNbMonstre($nb){
+        $this->nb_monstre = $nb;
+    }
+
 
     public function getVieActuelle(){
         return $this->vie_actuelle;
+    }
+
+
+    public function setVieActuelle($vie){
+
+        $this->vie_actuelle=$vie;
     }
 
     public function getJoueurPseudo(){
@@ -39,6 +49,10 @@ class Partie {
 
     public function getEnCours(){
         return $this->est_en_cours;
+    }
+
+    public function setEnCours($en_cours){
+        $this->est_en_cours = $en_cours;
     }
 
     public function getId(){
@@ -62,6 +76,30 @@ class Partie {
         return $sql->execute(array($this->getId(), $this->getIdJoueur(),$this->getEnCours(),$this->getVieActuelle()));
     }
 
+
+    /*
+     * Fonction qui fait une sauvegarde de la partie
+     */
+
+    public function sauvegarder(){
+        // On fait appel à la connexion PDO
+        $pdo = Parametres::getPDO();
+        $sql = $pdo->prepare('UPDATE partie SET partie_vie_actuelle = ?, partie_en_cours =? WHERE partie_id =?');
+        return $sql->execute(array($this->getVieActuelle(),$this->getEnCours(),$this->getId()));
+    }
+
+
+    /*
+     * Fonction qui fait une sauvegarde de l'état des monstres
+     */
+
+    public function sauvegarderComposer($id_monstre){
+        // On fait appel à la connexion PDO
+        var_dump($id_monstre);
+        $pdo = Parametres::getPDO();
+        $sql = $pdo->prepare('UPDATE composer SET composer_vivant = ? WHERE composer_partie_id = ? AND composer_ennemi_id =?');
+        return $sql->execute(array(false,$this->getId(),$id_monstre));
+    }
 
 
     /*
@@ -92,6 +130,7 @@ class Partie {
                             INNER JOIN joueur ON partie.partie_joueur_id = joueur.joueur_id
                             INNER JOIN composer ON partie.partie_id = composer.composer_partie_id
                             WHERE partie_en_cours = 1
+                            AND composer_vivant = 1
                             GROUP BY partie_id, partie_joueur_id,partie_vie_actuelle, joueur_pseudo")->fetchAll(PDO::FETCH_ASSOC);
         $output = array();
         foreach($res as $partie) {
