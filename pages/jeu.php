@@ -107,12 +107,31 @@
                 <br/>
 
                 <button class="btn btn-danger" id="attaquer_monstre" name="attaquer_monstre" onclick="attaquerMonstre();">
-                    Attaquer !!!
+                   <!-- Attaquer !!!-->
                 </button>
 
 
             </div>
 
+        </div>
+
+
+        <div class="row">
+
+            <div id="log" class="col-md-offset-1 col-md-10 col-lg-10 col-sm-10">
+
+
+                <h1>
+                    Logs :
+
+                </h1>
+                <hr/>
+                <br/>
+
+
+
+
+            </div>
         </div>
 
 
@@ -130,6 +149,9 @@
 
     // vie_actuelle, pseudo, vie_max, degat_base, vivant, objets
 
+
+
+    var divLog = document.getElementById("log");
     var joueur = <?php echo json_encode($joueur);?>;
 
 
@@ -147,6 +169,11 @@
         joueur.vie_actuelle = joueur.vie_actuelle-1;
 
         document.getElementById("affichage_vie").innerHTML =joueur.vie_actuelle+'/'+joueur.vie_max;
+
+
+        divLog.innerHTML +='Vous vous êtes infligé 1 PDV...<br/>';
+
+        divLog.scrollTop = divLog.scrollHeight;
 
     }
 
@@ -168,12 +195,20 @@
         }
         monstre_actuel.vie = monstre_actuel.vie - joueur.degat_base;
 
+        divLog.innerHTML +='Vous avez perdu '+ monstre_actuel.degat_base + 'PDV !<br/>';
+
+        divLog.innerHTML +='Le monstre a perdu '+ joueur.degat_base + 'PDV !<br/>';
+
+        divLog.scrollTop = divLog.scrollHeight;
+
 
         // On save si le monstre meurt
         if(monstre_actuel.vie <=0){
             monstre_actuel.vivant=false;
             $('#sauvegarder_partie').click();
         }
+
+
 
 
 
@@ -227,7 +262,6 @@
             var form = $('<form action="' + url + '" method="post">' +
             '<input  type="hidden" name="monstre_vivant" value="'+monstre_actuel.vivant+' " />' +
             '<input  type="hidden" name="vie_actuelle" value="'+joueur.vie_actuelle+' " />' +
-
             '</form>');
             $('body').append(form);
             form.submit();
