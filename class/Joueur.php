@@ -1,16 +1,16 @@
 <?php
 
-class Joueur extends Entite {
+class Joueur extends Entite implements \JsonSerializable{
 
     private $pseudo;
     private $score;
     private $vie_actuelle;
 
-    public function __construct($pseudo, $id,$vie_max){
+    public function __construct($pseudo, $id,$vie_max,$degat_base){
 
         // On initialise le constructeur parent
 
-        parent::__construct($id,$vie_max);
+        parent::__construct($id,$vie_max,$degat_base);
 
         $this->pseudo = $pseudo;
 
@@ -25,6 +25,12 @@ class Joueur extends Entite {
 
 
 
+    }
+
+
+    // pour envoyer les objets php en js
+    public function jsonSerialize() {
+        return get_object_vars($this);
     }
 
     public function getVieActuelle(){
@@ -60,9 +66,9 @@ class Joueur extends Entite {
 
         // On fait appel à la connexion PDO
         $pdo = Parametres::getPDO();
-        $sql = $pdo->prepare('INSERT INTO joueur(joueur_id,joueur_pseudo,joueur_vie)
-                              VALUES(null,?,?)');
-        return $sql->execute(array($this->getPseudo(), $this->getVie()));
+        $sql = $pdo->prepare('INSERT INTO joueur(joueur_id,joueur_pseudo,joueur_vie,joueur_degat_base)
+                              VALUES(null,?,?,?)');
+        return $sql->execute(array($this->getPseudo(), $this->getVie(),$this->getDegatBase()));
     }
 
 
@@ -78,7 +84,7 @@ class Joueur extends Entite {
         $sql->execute(array($id));
         $res = $sql->fetch(PDO::FETCH_ASSOC);
         if(!empty($res))
-            return new Joueur($res['joueur_pseudo'], $res['joueur_id'], $res['joueur_vie']);
+            return new Joueur($res['joueur_pseudo'], $res['joueur_id'], $res['joueur_vie'],$res['joueur_degat_base']);
         else
             return false;
     }
@@ -91,7 +97,8 @@ class Joueur extends Entite {
         $res = $pdo->query("SELECT * FROM joueur")->fetchAll(PDO::FETCH_ASSOC);
         $output = array();
         foreach($res as $joueur) {
-            $output[] = new Joueur( $joueur['joueur_pseudo'], $joueur['joueur_id'],$joueur['joueur_vie']);
+            $output[] = new Joueur( $joueur['joueur_pseudo'],
+                        $joueur['joueur_id'],$joueur['joueur_vie'],$joueur['joueur_degat_base']);
         }
         return $output;
     }
@@ -121,10 +128,11 @@ class Joueur extends Entite {
 
             $pseudo = $champs['joueur_pseudo'];
             $vie = $champs['joueur_vie'];
+            $degat_base = $champs['joueur_degat_base'];
 
 
-            $sql = $pdo->prepare("UPDATE joueur SET joueur_vie = ?,joueur_pseudo = ? WHERE joueur_id = ?");
-            $sql->execute(array($pseudo,$vie,$id_joueur));
+            $sql = $pdo->prepare("UPDATE joueur SET joueur_vie = ?,joueur_pseudo = ?, joueur_degat_base = ? WHERE joueur_id = ?");
+            $sql->execute(array($vie,$pseudo,$degat_base,$id_joueur,));
         }
     }
 
