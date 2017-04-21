@@ -21,13 +21,11 @@
 
 
 
-    - Lancer une partie en choisissant quels monstres et quel joueur on veut + leur nb (ajoutera des pv et marquera comme grp les ennemis)
+    - Lancement de la partie avec une difficulté (modificateur de pv et de dégâts pour les monstres? Bonus de score pour le joueur)
     - Gérer la page jeu
-    - Affichage de l'encadré du monstre combattu
     - Gérer les combats entre le joueur et les monstres (un par un)
     - Affichage du tableau de score à l'accueil (ou dans un écran "score")
     - Ajouter une chance de bloquer les coups pour le joueur et les monstres (ajout d'un level ?)
-    - Sauvegarder la partie en cours si le joueur n'est pas mort (après chaque combat ?)
     - Enregistrer le score à la fin de la partie
     - Ajouter des items : modifier le reste pour ça
 
@@ -39,9 +37,25 @@
 
 ### Version 0.3 :
 
+
+    + Affichage dans la page de création des PDV et dégâts des différentes entités.
     + Correction apportée au message si la partie est gagnée. (fatal error function returns null)
     + Petit log de combat ajouté à l'écran de jeu !
 
+
+    TODO :
+
+        - Créer un calcul de "puissance" selon vie + dégât.
+
+        - Gestion du score. (faire un petit algo selon la difficulté. Somme des PDV des mobs tués avec comme facteurs leurs dégâts
+        et les PDV du joueur?)
+        - Si les PDV du joueur et ses dégâts sont à peu près équivalents (90% de similarité)
+          à ceux du monstre : score = + 10 : à 100% de ce que donne le monstre
+        - Si <50< 90 % similarité : score = + 7
+        - Si <20<50% similarité : score = + 4
+        - Si < 20% similarité : score = +1
+        - Si  100%<150% similarité : score = + 15
+        - Si > 200% similarité : score = +30
 
 ### Version 0.2 :
 
