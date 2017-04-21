@@ -137,11 +137,31 @@ class MainController{
                     $joueur->setVieActuelle($unePartie->getVieActuelle());
 
 
+                    if(isset($_POST['joueur_vivant'])&& !empty($_POST['joueur_vivant'])){
+
+
+
+                        $unePartie->setEnCours(false);
+
+                        // TODO : sauvegarder en base l'état de la partie (nb de monstres restants)
+
+                        $unePartie->sauvegarder();
+
+                        // message de perte de partie
+
+                        $message_retour = array('erreur' => true, 'message' => 'La partie est terminée !');
+
+                    }
+
 
                     if(isset($_POST['vie_actuelle'])&& !empty($_POST['vie_actuelle'])){
                         $joueur->setVieActuelle($_POST['vie_actuelle']);
 
-                        // TODO : sauvegarder en base
+                        $unePartie->setVieActuelle($joueur->getVieActuelle());
+
+                        // TODO : sauvegarder en base l'état de la partie (nb de monstres restants)
+
+                        $unePartie->sauvegarder();
 
                         // message de sauvegarde réussie
 
@@ -150,6 +170,51 @@ class MainController{
                     }
 
                     // Récupérer les monstres
+
+
+                    $lesMonstres = Ennemi::getParPartie($unePartie->getId());
+
+
+                    // Si un monstre meurt
+                    if(isset($_POST['monstre_vivant'])&& !empty($_POST['monstre_vivant'])){
+
+
+                        $joueur->setVieActuelle($_POST['vie_actuelle']);
+
+                        $unePartie->setNbMonstre($unePartie->getNbMonstre()-1);
+
+                        // TODO : sauvegarder en base l'état de la partie (nb de monstres restants)
+
+                        $unePartie->sauvegarderComposer($lesMonstres[0]->getId());
+
+                        $unePartie->sauvegarder();
+
+
+
+
+
+
+                        // S'il n'y a plus de monstre dans le tableau
+
+                        if($unePartie->getNbMonstre() == 0){
+
+                            $message_retour = array('erreur' => false, 'message' => 'Vous avez gagné la partie !');
+
+                        }
+                        else{
+                            // On unset le monstre du tableau
+
+                            unset($lesMonstres[0]);
+
+                            $lesMonstres = array_values($lesMonstres);
+                        }
+
+
+                    }
+
+                    // définit le premier monstre comme le monstre actuel
+                    $monstre_actuel = $lesMonstres[0];
+
 
 
 
@@ -197,9 +262,10 @@ class MainController{
                 // Pour éviter que l'user saisisse n'importe quoi
                 $pseudo = htmlspecialchars($_POST['joueur_pseudo']);
                 $vie = (int) $_POST['joueur_vie'];
+                $degat_base = (int) $_POST['joueur_degat_base'];
 
                 // Vie définira la vie max du joueur
-                $joueur = new Joueur($pseudo,null,$vie);
+                $joueur = new Joueur($pseudo,null,$vie,$degat_base);
 
                 // On enregistre en bdd le joueur
                 $joueur->enregistrer();
@@ -216,11 +282,12 @@ class MainController{
                 // Pour éviter que l'user saisisse n'importe quoi
                 $nom = htmlspecialchars($_POST['monstre_nom']);
                 $espece = htmlspecialchars($_POST['monstre_espece']);
+                $degat_base = (int) $_POST['ennemi_degat_base'];
 
                 $vie = (int) $_POST['monstre_vie'];
 
                 // Vie définira la vie max du monstre
-                $monstre = new Ennemi($nom,$espece,null,$vie);
+                $monstre = new Ennemi($nom,$espece,null,$vie,$degat_base);
 
                 // On enregistre en bdd le monstre
                 $monstre->enregistrer();
