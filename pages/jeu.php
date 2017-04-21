@@ -61,6 +61,8 @@
                 echo '    </p>';
 
                 echo '    <br/>';
+                echo '    Dégâts de base :'.$joueur->getDegatBase();
+                echo '    <br/>';
                 echo 'Restants : '.$unePartie->getNbMonstre();
 
                 ?>
@@ -78,6 +80,38 @@
             </div>
 
 
+            <div id="menuMonstre" class="col-md-offset-1 col-md-8 col-lg-8 col-sm-8">
+
+                <h3>
+
+                    Espèce :
+                    <?php echo $monstre_actuel->getEspece(); ?>
+                </h3>
+
+                <?php
+
+                echo '    <hr/>';
+                echo '    <br/>';
+                echo '    Nom :'.$monstre_actuel->getNom();
+                echo '    <br/>';
+                echo '    Dégâts de base :'.$monstre_actuel->getDegatBase();
+                echo '    <br/>';
+
+                echo '    <p id="affichage_vie_monstre">';
+                echo $monstre_actuel->getVie().'/'.$monstre_actuel->getVie();
+                echo '    </p>';
+
+                echo '    <br/>';
+
+                ?>
+                <br/>
+
+                <button class="btn btn-danger" id="attaquer_monstre" name="attaquer_monstre" onclick="attaquerMonstre();">
+                    Attaquer !!!
+                </button>
+
+
+            </div>
 
         </div>
 
@@ -94,9 +128,14 @@
 <script type="text/javascript">
 
 
-    // vie_actuelle, pseudo, vie_max, vivant, objets
+    // vie_actuelle, pseudo, vie_max, degat_base, vivant, objets
 
     var joueur = <?php echo json_encode($joueur);?>;
+
+
+    // nom, espece, id, vie_max, degat_base, vie, vivant, objet
+    var monstre_actuel = <?php echo json_encode($monstre_actuel);?>;
+
 
 
     /**
@@ -108,6 +147,38 @@
         joueur.vie_actuelle = joueur.vie_actuelle-1;
 
         document.getElementById("affichage_vie").innerHTML =joueur.vie_actuelle+'/'+joueur.vie_max;
+
+    }
+
+
+
+
+    /**
+     * Fonction d'attaque du monstre
+     */
+    function attaquerMonstre() {
+
+
+        joueur.vie_actuelle = joueur.vie_actuelle-monstre_actuel.degat_base;
+
+        // On save si le joueur meurt
+        if(joueur.vie_actuelle <=0){
+            joueur.vivant=false;
+            $('#sauvegarder_partie').click();
+        }
+        monstre_actuel.vie = monstre_actuel.vie - joueur.degat_base;
+
+
+        // On save si le monstre meurt
+        if(monstre_actuel.vie <=0){
+            monstre_actuel.vivant=false;
+            $('#sauvegarder_partie').click();
+        }
+
+
+
+        document.getElementById("affichage_vie").innerHTML =joueur.vie_actuelle+'/'+joueur.vie_max;
+        document.getElementById("affichage_vie_monstre").innerHTML =monstre_actuel.vie+'/'+monstre_actuel.vie_max;
 
     }
 
@@ -130,23 +201,49 @@
     $("#sauvegarder_partie").on("click",function(){
 
 
-
-
         var param_partie = $_GET('partie');
 
         // Récupération des valeurs
-
-
         var url = 'jeu&partie='+param_partie;
 
 
-        var data =  'vie_actuelle='+ joueur.vie_actuelle;
+        // cas où le joueur est mort
+        if(joueur.vie_actuelle <=0){
 
-        var form = $('<form action="' + url + '" method="post">' +
-        '<input  type="hidden" name="vie_actuelle" value="'+joueur.vie_actuelle+' " />' +
-        '</form>');
-        $('body').append(form);
-        form.submit();
+
+            var form = $('<form action="' + url + '" method="post">' +
+            '<input  type="text" name="joueur_vivant" value="'+joueur.vivant+' " />' +
+            '</form>');
+            $('body').append(form);
+            form.submit();
+
+
+        }
+
+
+        // cas où le monstre est mort
+
+        else if(monstre_actuel.vie <=0){
+            var form = $('<form action="' + url + '" method="post">' +
+            '<input  type="hidden" name="monstre_vivant" value="'+monstre_actuel.vivant+' " />' +
+            '<input  type="hidden" name="vie_actuelle" value="'+joueur.vie_actuelle+' " />' +
+
+            '</form>');
+            $('body').append(form);
+            form.submit();
+        }
+
+        else{
+
+
+            var form = $('<form action="' + url + '" method="post">' +
+            '<input  type="hidden" name="vie_actuelle" value="'+joueur.vie_actuelle+' " />' +
+            '</form>');
+            $('body').append(form);
+            form.submit();
+
+
+        }
 
 
 
