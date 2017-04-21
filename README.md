@@ -39,6 +39,7 @@
 
 ### Version 0.3 :
 
+    + Correction apportée au message si la partie est gagnée. (fatal error function returns null)
     + Petit log de combat ajouté à l'écran de jeu !
 
 
