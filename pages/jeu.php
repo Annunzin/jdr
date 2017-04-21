@@ -202,7 +202,26 @@
     function attaquerMonstre() {
 
 
-        joueur.vie_actuelle = joueur.vie_actuelle-monstre_actuel.degat_base;
+
+        var x = Math.floor((Math.random() * 6) + 1);
+
+        if(x === 2){
+
+            divLog.innerHTML +='Vous avez bloqué le coup !<br/>';
+
+        }
+
+        else{
+
+            joueur.vie_actuelle = joueur.vie_actuelle-monstre_actuel.degat_base;
+            divLog.innerHTML +='Vous avez perdu '+ monstre_actuel.degat_base + 'PDV !<br/>';
+
+
+        }
+
+
+
+
 
         // On save si le joueur meurt
         if(joueur.vie_actuelle <=0){
@@ -211,7 +230,6 @@
         }
         monstre_actuel.vie = monstre_actuel.vie - joueur.degat_base;
 
-        divLog.innerHTML +='Vous avez perdu '+ monstre_actuel.degat_base + 'PDV !<br/>';
 
         divLog.innerHTML +='Le monstre a perdu '+ joueur.degat_base + 'PDV !<br/>';
 
