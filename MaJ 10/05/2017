@@ -1,0 +1,48 @@
+<?php
+// Tout part d'ici
+
+// charge automatiquement les classes nécessaires à l'utilisation
+function __autoload($class_name) {
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/jdr-master/class/' . $class_name . '.php';
+}
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/jdr-master/controller/MainController.php';
+
+// On instancie le nouveau controller
+$mc = new MainController();
+
+// S'il n'y a pas de page récupérée ou si la page est la page d'accueil
+if(!isset($_GET['page']) || empty($_GET['page']) || $_GET['page'] == 'accueil') {
+
+    // Va chercher la fonction d'appel à la page d'accueil dans le controller
+    $mc->pageAccueil();
+}
+
+
+else {
+    switch($_GET['page']) {
+
+        case 'parametres' :
+            $mc->pageParametres();
+            break;
+
+        case 'creation':
+            $mc->pageCreation();
+            break;
+
+        case 'lancement':
+            $mc->pageLancement();
+            break;
+
+        case 'jeu' :
+            $mc->pageJeu();
+            break;
+
+        // On va à la page d'accueil par défaut
+        default :
+            $mc->pageAccueil();
+            break;
+    }
+}
+
+
